@@ -1,1 +1,3 @@
 # PokeApi
+
+ pip install requests

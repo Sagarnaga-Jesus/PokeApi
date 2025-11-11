@@ -1,0 +1,8 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1 class="text-center my-4">Buscador</h1>
+<form method="GET" action="/search" class="d-flex justify-content-center mb-4">
+    <input type="text" name="query" class="form-control w-50 me-2" placeholder="Buscar..." name="name" id="name" required>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+{%endblock%}
