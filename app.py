@@ -22,7 +22,13 @@ def search():
         if response.status_code == 200:
             pokemon_data = response.json()
             return render_template('pokmon.html', pokemon=pokemon_data)
-        data = response.json()
+        else:
+            flash('Pokémon no encontrado. Intenta con otro nombre.','warning')
+            return redirect(url_for('base'))
+        
+    except requests.exceptions.RequestException as e:
+        flash('Error al conectar con la API de Pokémon. Intenta más tarde.','danger')
+        return redirect(url_for('base'))
         
         pokemon_info = {
             'name': data['name'].title(),
