@@ -14,36 +14,33 @@ def search():
     
     pokemon_name = request.form.get('name','').strip().lower()
     if not pokemon_name:
-        flash('Por favor ingresa un nombre de Pokémon válido.','danger')
+        flash('Por favor ingresa un nombre de Pokémon válido.','error')
         return redirect(url_for('index.html'))
     
     try:
         response = requests.get(f"{API}{pokemon_name}")
         if response.status_code == 200:
             pokemon_data = response.json()
-            return render_template('pokmon.html', pokemon=pokemon_data)
+
+            pokemon_info = {
+                'name': pokemon_data['name'].title(),
+                'id': pokemon_data['id'],
+                'height': pokemon_data['height'] / 10,
+                'weight': pokemon_data['weight'] / 10,
+                'imagen': pokemon_data['sprites']['front_default'],
+                'types': [t['type']['name'].title() for t in pokemon_data['types']],
+                'abilities': [a['ability']['name'].title() for a in pokemon_data['abilities']],
+            }
+            
+            return render_template('pokemon.html', pokemon=pokemon_info)
         else:
-            flash('Pokémon no encontrado. Intenta con otro nombre.','warning')
+            flash(f'Pokemon"{pokemon_name} no encontrado','error')
             return redirect(url_for('base'))
         
     except requests.exceptions.RequestException as e:
-        flash('Error al conectar con la API de Pokémon. Intenta más tarde.','danger')
+        flash('Error al conectar con la API de Pokémon. Inténtalo de nuevo más tarde.','error')
         return redirect(url_for('base'))
-        
-        pokemon_info = {
-            'name': data['name'].title(),
-            'id': data['id'],
-            'height': data['height'],
-            'weight': data['weight'],
-            'types': [t['type']['name'].title() for t in data['types']],
-            'abilities': [a['ability']['name'].title() for a in data['abilities']],
-            'sprite': data['sprites']['front_default']
-        }
-        
-        return render_template('results.html', pokemon=pokemon_info)
-        
-    
-    return render_template('results.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

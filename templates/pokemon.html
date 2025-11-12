@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 
+{%block title %}{}{% endblock %}
+
+
 {% block contenido%}
 
 {% for pokemon in pokemons %}
     <div class="card" style="width: 18rem; display: inline-block; margin: 10px;">
-        <img src="{{ pokemon.image_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+        <img src="{{ pokemon.imagen }}" class="card-img-top" alt="{{ pokemon.name }}">
         <div class="card-body">
             <h5 class="card-title">{{ pokemon.name }}</h5>
             <p class="card-text">Type: {{ pokemon.type }}</p>
-            <p class="card-text">Level: {{ pokemon.level }}</p>
+            <p class="card-text">Id: {{ pokemon.id }}</p>
+            {% for type in pokemon.types%}
+            <p class="card-text"> type: {{ typt }}</p>
+            {% endfor %}
         </div>
     </div>
 {% endfor %}
