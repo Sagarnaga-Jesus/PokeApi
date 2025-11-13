@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
 
-{%block title %}{}{% endblock %}
+{% block title %}{{ pokemon.name }}{% endblock %}
 
+{% block contenido %}
+<div class="card border-primary border-5 rounded-4" style="width: 30rem; margin: 20px auto; text-align: center; background-color: #9e0e0eff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <img src="{{ pokemon.imagen }}" class="card-img-top" alt="{{ pokemon.name }}">
+    <div class="card-body">
+        <h3 class="card-title text-white fs-1">{{ pokemon.name }}</h3>
+        <p class="card-text text-white"><strong>ID:</strong> {{ pokemon.id }}</p>
+        <p class="card-text text-white"><strong>Altura:</strong> {{ pokemon.height }} m</p>
+        <p class="card-text text-white"><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
 
-{% block contenido%}
-
-{% for pokemon in pokemons %}
-    <div class="card" style="width: 18rem; display: inline-block; margin: 10px;">
-        <img src="{{ pokemon.imagen }}" class="card-img-top" alt="{{ pokemon.name }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ pokemon.name }}</h5>
-            <p class="card-text">Type: {{ pokemon.type }}</p>
-            <p class="card-text">Id: {{ pokemon.id }}</p>
-            {% for type in pokemon.types%}
-            <p class="card-text"> type: {{ typt }}</p>
+        <p class="card-text text-white fs-3">Tipos:</p>
+        <ul>
+            {% for type in pokemon.types %}
+            <li class="text-white">{{ type }}</li>
             {% endfor %}
-        </div>
+        </ul>
+        <a href="/" class="btn btn-light mt-3">Volver al buscador</a>
     </div>
-{% endfor %}
-
+</div>
 {% endblock %}

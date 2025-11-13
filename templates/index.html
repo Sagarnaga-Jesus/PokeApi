@@ -1,9 +1,23 @@
-{%extends 'base.html'%}
-{%block content%}
-<h1 class="text-center my-4 text-danger" >Buscador Pokemon</h1>
+{% extends 'base.html' %}
 
-<form method="GET" action="/search" class="d-flex justify-content-center mb-4">
-    <input type="text" name="query" class="form-control w-50 me-2" placeholder="Buscar..." name="name" id="name" required>
+{% block contenido %}
+<h1 class="text-center my-4 text-danger">Buscador Pokémon</h1>
+
+<form method="POST" action="{{ url_for('search') }}" class="d-flex justify-content-center mb-4">
+    <input type="text" name="name" class="form-control w-50 me-2" placeholder="Ingresa el nombre del Pokémon" id="name" required>
     <button type="submit" class="btn btn-primary">Buscar</button>
 </form>
-{%endblock%}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="container">
+        {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }} text-center">
+            {{ message }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% endblock %}
